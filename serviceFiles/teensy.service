@@ -1,0 +1,15 @@
+[Unit]
+Description=Teensy Data Logger
+After=multi-user.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/uivast/
+User=uivast
+Group=uivast
+ExecStart=/usr/bin/python /home/uivast/TeensyLogger.py 
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
