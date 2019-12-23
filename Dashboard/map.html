@@ -2,7 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="./assets/leaflet.css">
-        <title>map test</title>
+        <title>map</title>
     </head>
     <body>
         <h3><a href="./data.html">raw data</a></h1>
@@ -11,8 +11,9 @@
         <p><div id="mapid" style="border-style:solid;border-width:2px;width:1024px;height:768px;"></div></p>
         <script src="./assets/leaflet.js"></script>
         <script>
-            //var ws = new WebSocket('ws://206.189.172.146:8080/');
-	    var ws = new WebSocket('ws://localhost:8080/');
+            var ws = new WebSocket('ws://' + location.host + ':8080');
+            console.log('websocket connected:\nws://' + location.host + ':8080');
+	        //var ws = new WebSocket('ws://localhost:8080/');
             var mymap = L.map('mapid').setView([46.730, -117.011], 15);
 
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiYXRraTc4MjgiLCJhIjoiY2o4bTMydTVhMHVyZzMzbXUwYTFwdzFwbiJ9.uE2OyZtE3AXoZwbU71iuzQ', {

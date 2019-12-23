@@ -3,7 +3,7 @@
 from __future__ import print_function
 
 import httplib2
-import oauth2client
+import oauth2client     # $ pip install google-api-python-client
 import os
 import base64
 import time
