@@ -6,6 +6,9 @@ import datetime
 import pynmea2
 import RPi.GPIO as GPIO
 
+# todo:
+#   separate this into multiple files.
+#   functions, declarations, and setup can go in another .py module, then we can import it. 
 
 # connect the Ring Indicator (RI) pin on Iridium to pin 16 on pi.
 # actually, don't; the iridium unit pushes SBDRING 
