@@ -2211,6 +2211,58 @@ type 0207, grid 10 mm</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="wirepad" urn="urn:adsk.eagle:library:412">
+<description>&lt;b&gt;Single Pads&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="SMD2,54-5,08" urn="urn:adsk.eagle:footprint:30823/1" library_version="2">
+<description>&lt;b&gt;SMD PAD&lt;/b&gt;</description>
+<smd name="1" x="0" y="0" dx="2.54" dy="5.08" layer="1"/>
+<text x="0" y="0" size="0.0254" layer="27">&gt;VALUE</text>
+<text x="-1.5" y="-2.5" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+</package>
+</packages>
+<packages3d>
+<package3d name="SMD2,54-5,08" urn="urn:adsk.eagle:package:30841/1" type="box" library_version="2">
+<description>SMD PAD</description>
+<packageinstances>
+<packageinstance name="SMD2,54-5,08"/>
+</packageinstances>
+</package3d>
+</packages3d>
+<symbols>
+<symbol name="PAD" urn="urn:adsk.eagle:symbol:30808/1" library_version="2">
+<wire x1="-1.016" y1="1.016" x2="1.016" y2="-1.016" width="0.254" layer="94"/>
+<wire x1="-1.016" y1="-1.016" x2="1.016" y2="1.016" width="0.254" layer="94"/>
+<text x="-1.143" y="1.8542" size="1.778" layer="95">&gt;NAME</text>
+<text x="-1.143" y="-3.302" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="P" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="SMD5" urn="urn:adsk.eagle:component:30859/2" prefix="PAD" uservalue="yes" library_version="2">
+<description>&lt;b&gt;SMD PAD&lt;/b&gt;</description>
+<gates>
+<gate name="1" symbol="PAD" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SMD2,54-5,08">
+<connects>
+<connect gate="1" pin="P" pad="1"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:30841/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="POPULARITY" value="21" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -2226,6 +2278,8 @@ type 0207, grid 10 mm</description>
 <part name="R1" library="SECTION A" deviceset="ADAFRUIT_R-US_" device="0207/10"/>
 <part name="U$1" library="Teensy_3_Series_Board_v1.0" deviceset="TEENSY_3.1_BASIC" device=""/>
 <part name="J4" library="SparkFun-Connectors" deviceset="CONN_04" device="POLAR"/>
+<part name="PAD1" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD5" device="" package3d_urn="urn:adsk.eagle:package:30841/1"/>
+<part name="PAD3" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="SMD5" device="" package3d_urn="urn:adsk.eagle:package:30841/1"/>
 </parts>
 <sheets>
 <sheet>
@@ -2251,6 +2305,14 @@ type 0207, grid 10 mm</description>
 <instance part="J4" gate="J1" x="38.1" y="33.02" smashed="yes">
 <attribute name="VALUE" x="33.02" y="25.654" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="33.02" y="41.148" size="1.778" layer="95" font="vector"/>
+</instance>
+<instance part="PAD1" gate="1" x="22.86" y="60.96" smashed="yes">
+<attribute name="NAME" x="21.717" y="62.8142" size="1.778" layer="95"/>
+<attribute name="VALUE" x="21.717" y="57.658" size="1.778" layer="96"/>
+</instance>
+<instance part="PAD3" gate="1" x="142.24" y="88.9" smashed="yes" rot="R270">
+<attribute name="NAME" x="144.0942" y="90.043" size="1.778" layer="95" rot="R270"/>
+<attribute name="VALUE" x="138.938" y="90.043" size="1.778" layer="96" rot="R270"/>
 </instance>
 </instances>
 <busses>
@@ -2292,6 +2354,9 @@ type 0207, grid 10 mm</description>
 <junction x="58.42" y="48.26"/>
 <pinref part="U$1" gate="G$1" pin="2"/>
 <wire x1="58.42" y1="76.2" x2="88.9" y2="76.2" width="0.1524" layer="91"/>
+<pinref part="PAD1" gate="1" pin="P"/>
+<wire x1="43.18" y1="60.96" x2="25.4" y2="60.96" width="0.1524" layer="91"/>
+<junction x="43.18" y="60.96"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -2317,6 +2382,9 @@ type 0207, grid 10 mm</description>
 <wire x1="58.42" y1="33.02" x2="43.18" y2="33.02" width="0.1524" layer="91"/>
 <junction x="58.42" y="33.02"/>
 <pinref part="J4" gate="J1" pin="2"/>
+<pinref part="PAD3" gate="1" pin="P"/>
+<wire x1="142.24" y1="78.74" x2="142.24" y2="86.36" width="0.1524" layer="91"/>
+<junction x="142.24" y="78.74"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -2340,4 +2408,21 @@ type 0207, grid 10 mm</description>
 </sheets>
 </schematic>
 </drawing>
+<compatibility>
+<note version="8.2" severity="warning">
+Since Version 8.2, EAGLE supports online libraries. The ids
+of those online libraries will not be understood (or retained)
+with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports URNs for individual library
+assets (packages, symbols, and devices). The URNs of those assets
+will not be understood (or retained) with this version.
+</note>
+<note version="8.3" severity="warning">
+Since Version 8.3, EAGLE supports the association of 3D packages
+with devices in libraries, schematics, and board files. Those 3D
+packages will not be understood (or retained) with this version.
+</note>
+</compatibility>
 </eagle>
