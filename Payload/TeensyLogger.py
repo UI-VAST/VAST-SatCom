@@ -1,16 +1,9 @@
 #!/usr/bin/python
 
-'''
-    reads in data from Teensy (ext. and int. temperature sensors),
-    and from MPL pressure sensor (which also contains an internal temp).
-    outputs data to teensyPacketFile
-    ....
-    this should be renamed, since it's not only reading from the Teensy.
-'''
-
 import smbus
 import time
 import MPL
+import RPi.GPIO as GPIO
 
 teensy = smbus.SMBus(1)
 teensyAddr = 0x04
@@ -18,6 +11,26 @@ mplAddr = 0x60
 
 teensyPacketFile = '/home/uivast/data/teensyPackets.txt';
 teensyLast = '/home/uivast/data/teensyLast.txt';
+
+cutdownAltitude = 22000 # meters
+#meters     feet
+# 25000     82021
+# 27432     90000
+# 30000     98425
+# 30480     100000
+
+cutdownAltitudeCount = 0
+cutdownPin = 12
+isCutdown = False
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(cutdownPin,GPIO.OUT)
+
+def cutDown():
+    cd = GPIO.PWM(cutdownPin,10)
+    cd.start(1)
+    time.sleep(4)
 
 while 1:
     data = ""
@@ -55,16 +68,27 @@ while 1:
 
     print("reading altitude ....")
     try:
-        altitude += str(MPL.getAltitudeM())
+        altInt = MPL.getAltitudeM()
+        altitude += str(altInt)
         print(altitude)
+        if(altInt > cutdownAltitude):
+            cutdownAltitudeCount += 1
+        else:
+            cutdownAltitudeCount = 0
+        if(cutdownAltitudeCount > 3):
+            cutDown()
+            isCutdown = True
     except:
         print("can't read altitude .")
         altitude = "-127"
     
     data += extTemp + "," + intTemp + "," + altitude + "," + pressure
+    if(isCutdown):
+        data += ",cutdown"
     with open(teensyPacketFile,'a') as f:
         f.write(data + '\n')
     with open(teensyLast,'w') as f:
         f.write(data) 
     time.sleep(3)
+
 

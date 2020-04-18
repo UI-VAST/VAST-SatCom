@@ -15,9 +15,9 @@ gpsLastLine = '/home/uivast/data/gpsLastLine.txt';
 venusGPS.reset_input_buffer()
 venusGPS.flush()
 while 1:
-    if(venusGPS.in_waiting > 0):
-        nmeaString = venusGPS.readline()
-        print(nmeaString)
+    nmeaString = venusGPS.readline()
+    print(nmeaString)
+    if(pynmea2.parse(nmeaString)):
         with open(gpsPacketFile,'a') as f:
             f.write(nmeaString + '\n')
         with open(gpsLastLine,'w') as f:
@@ -25,9 +25,9 @@ while 1:
 
         venusGPS.reset_input_buffer()
         venusGPS.flush()
-    time.sleep(3)
+        time.sleep(3)
 
-'''
-nmeaParsed = pynmea2.parse(nmeaString);
+        '''
+        nmeaParsed = pynmea2.parse(nmeaString);
 
-'''
+        '''
