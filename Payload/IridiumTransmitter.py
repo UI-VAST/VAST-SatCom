@@ -4,6 +4,8 @@ from Iridium import iridium
 import time
 import datetime
 
+# program to automatically transmit data over iridium network.
+
 #TODO:
 '''
     in separate script, record gps data into a gps logger.
@@ -21,7 +23,8 @@ port = "/dev/ttyS0"
 baud = 19200
 
 ir = iridium.Iridium(port,baud)
-ir.transmissionTime = 90 # transmit every 90 seconds
+ir.transmissionTime = 90	# transmit every 90 seconds
+ir.dest = "RB0012851"	#make sure you know which iridium modem is sending, which is receiving
 
 iridium.log("session started at " + timestamp())
 

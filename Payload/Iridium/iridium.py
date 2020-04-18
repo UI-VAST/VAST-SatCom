@@ -15,6 +15,8 @@ import datetime
 def timestamp():
     return str(datetime.datetime.now().strftime("%Y-%m-%d-%H%M%S"))
 
+#this section could go in our main .py file instead of this one.
+# it logs everything iridium is doing.
 logPath = os.path.join(os.getcwd(),'log');
 logFile = os.path.join(logPath,'log'+timestamp()+'.txt')
 if(not os.path.exists(logPath)):
@@ -27,6 +29,8 @@ def log(msg):
         f.write(str(datetime.datetime.now()) + '\t')
         f.write(str(msg) + '\n')
 
+
+#Iridium class:
 class Iridium:
     def __init__(self,port,baud):
         self.port = serial.Serial(port,baudrate=baud,timeout=5)
@@ -37,7 +41,8 @@ class Iridium:
         self.countdown = 0
         self.transmissionTime = 90
         self.sq = 0
-        self.outgoing = ""
+		self.dest = ""
+		self.LastMessage = ""
         #self.csq()
 
     def listen(self):
@@ -46,11 +51,12 @@ class Iridium:
     # just writes to serial port
     def write(self,msg):
         log(msg)
-        self.outgoing = msg
         self.port.write(msg)
 
     # writes message to outgoing buffer
     def SBDWT(self,msg):
+		if(self.dest != ""):
+			msg = self.dest + msg
         self.write("AT+SBDWT=" + msg + "\r\n")
 
     # reads from incoming buffer
@@ -110,11 +116,11 @@ class Iridium:
         log("packet:")
         log(packet)
         for i,p in enumerate(packet):
-            # every time a csq packet comes in,
-            # check sq again.
             if("CSQ:" in p):
                 self.sq = int(p[5])
                 log("sq:"+str(self.sq));
+				# every time a csq packet comes in,
+				# check sq again.
                 #self.csq()
             if("SBDIX:" in p):
                 response = p.split(":")[1].split(",");
@@ -144,8 +150,8 @@ class Iridium:
                 log(p)
                 self.SBDI(alert=True)
             if("SBDRT:" in p):
-                msg = p.split(":")[1]
                 log("message received!\n" + packet[i+1])
+				self.LastMessage = packet[i+1]
                 self.write("AT+SBDD1\r\n")
                 time.sleep(1)
 
