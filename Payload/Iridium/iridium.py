@@ -19,10 +19,7 @@ class Iridium:
         self.port.flush()
         self.write("AT+SBDREG\r\n")
         time.sleep(1)
-        self.countdown = 80
-        self.transmissionTime = 90
         self.sq = 0
-        self.dest = ""
         self.LastMessage = ""
         #self.csq()
 
@@ -36,8 +33,6 @@ class Iridium:
 
     # writes message to outgoing buffer
     def SBDWT(self,msg):
-        if(self.dest != ""):
-            msg = self.dest + msg
         self.write("AT+SBDWT=" + msg + "\r\n")
 
     # reads from incoming buffer
@@ -89,8 +84,6 @@ class Iridium:
                     r.append(self.port.readline()) 
                 self.ProcessPacket(r)
             time.sleep(1)
-            #print(self.countdown);
-            self.countdown += 1
         return r
 
     def ProcessPacket(self,packet):
