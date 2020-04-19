@@ -9,26 +9,6 @@
 import serial
 import time
 import threading
-import os
-import datetime
-
-def timestamp():
-    return str(datetime.datetime.now().strftime("%Y-%m-%d-%H%M%S"))
-
-#this section could go in our main .py file instead of this one.
-# it logs everything iridium is doing.
-logPath = os.path.join(os.getcwd(),'log');
-logFile = os.path.join(logPath,'log'+timestamp()+'.txt')
-if(not os.path.exists(logPath)):
-    os.mkdir(logPath)
-
-
-def log(msg):
-    print(msg)
-    with(open(logFile,'a')) as f:
-        f.write(str(datetime.datetime.now()) + '\t')
-        f.write(str(msg) + '\n')
-
 
 #Iridium class:
 class Iridium:

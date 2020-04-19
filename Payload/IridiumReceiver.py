@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
+from logger import *
 from Iridium import iridium
 import time
-import datetime
 
 # program to receive incoming data over iridium network.
 
@@ -12,7 +12,7 @@ baud = 19200
 ir = iridium.Iridium(port,baud)
 ir.dest = "RB0012828"
 
-iridium.log("session started at " + timestamp())
+iridium.log("session started at " + iridium.timestamp())
 
 ir.listen()
 
