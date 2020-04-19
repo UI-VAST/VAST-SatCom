@@ -9,26 +9,6 @@
 import serial
 import time
 import threading
-import os
-import datetime
-
-def timestamp():
-    return str(datetime.datetime.now().strftime("%Y-%m-%d-%H%M%S"))
-
-#this section could go in our main .py file instead of this one.
-# it logs everything iridium is doing.
-logPath = os.path.join(os.getcwd(),'log');
-logFile = os.path.join(logPath,'log'+timestamp()+'.txt')
-if(not os.path.exists(logPath)):
-    os.mkdir(logPath)
-
-
-def log(msg):
-    print(msg)
-    with(open(logFile,'a')) as f:
-        f.write(str(datetime.datetime.now()) + '\t')
-        f.write(str(msg) + '\n')
-
 
 #Iridium class:
 class Iridium:
@@ -41,8 +21,8 @@ class Iridium:
         self.countdown = 0
         self.transmissionTime = 90
         self.sq = 0
-		self.dest = ""
-		self.LastMessage = ""
+        self.dest = ""
+        self.LastMessage = ""
         #self.csq()
 
     def listen(self):
@@ -55,8 +35,8 @@ class Iridium:
 
     # writes message to outgoing buffer
     def SBDWT(self,msg):
-		if(self.dest != ""):
-			msg = self.dest + msg
+        if(self.dest != ""):
+            msg = self.dest + msg
         self.write("AT+SBDWT=" + msg + "\r\n")
 
     # reads from incoming buffer
@@ -70,7 +50,7 @@ class Iridium:
             self.write("AT+SBDIXA\r\n")
         else:
             self.write("AT+SBDIX\r\n")
-        
+
     # just reads from serial port
     def read(self):
         return self.port.readline()
@@ -92,7 +72,7 @@ class Iridium:
         print("SQ: " + r.split(":")[1])
         return int(r.split(":")[1])
         '''
-    
+
     def available(self):
         return self.port.in_waiting
 
@@ -119,8 +99,8 @@ class Iridium:
             if("CSQ:" in p):
                 self.sq = int(p[5])
                 log("sq:"+str(self.sq));
-				# every time a csq packet comes in,
-				# check sq again.
+                                # every time a csq packet comes in,
+                                # check sq again.
                 #self.csq()
             if("SBDIX:" in p):
                 response = p.split(":")[1].split(",");
@@ -151,7 +131,7 @@ class Iridium:
                 self.SBDI(alert=True)
             if("SBDRT:" in p):
                 log("message received!\n" + packet[i+1])
-				self.LastMessage = packet[i+1]
+                self.LastMessage = packet[i+1]
                 self.write("AT+SBDD1\r\n")
                 time.sleep(1)
 
