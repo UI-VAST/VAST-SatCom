@@ -19,7 +19,7 @@ class Iridium:
         self.port.flush()
         self.write("AT+SBDREG\r\n")
         time.sleep(1)
-        self.countdown = 0
+        self.countdown = 80
         self.transmissionTime = 90
         self.sq = 0
         self.dest = ""

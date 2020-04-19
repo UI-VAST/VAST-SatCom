@@ -19,13 +19,14 @@ import datetime
     handle receiving of cutdown command.
 '''
 
+transmissionTime = 90
+countdown = 80
+dest = "RB0012851"
 port = "/dev/ttyS0"
 #port = "/dev/ttyUSB0"
 baud = 19200
 
 ir = iridium.Iridium(port,baud)
-ir.transmissionTime = 90	# transmit every 90 seconds
-ir.dest = "RB0012851"	#make sure you know which iridium modem is sending, which is receiving
 
 log("session started at " + timestamp())
 
@@ -39,7 +40,9 @@ packet = ''
 while 1:
     # when transmissionTime seconds have passed, do the thing.
     # and reset countdown timer
-    if(ir.countdown > ir.transmissionTime):
-        ir.SBDWT(packet)
-        ir.countdown = 0
+    packet = timestamp()
+    if(countdown > transmissionTime):
+        ir.SBDWT(dest + "," + packet)
+        countdown = 0
     time.sleep(1)
+    countdown += 1
