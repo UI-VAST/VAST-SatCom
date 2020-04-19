@@ -6,6 +6,7 @@
 
 '''
 
+from logger import *
 import serial
 import time
 import threading

@@ -1,0 +1,6 @@
+2020-04-19T112952	AT+SBDREG
+
+2020-04-19T112953	session started at 2020-04-19T112953
+2020-04-19T112953	listener started
+2020-04-19T112953	packet:
+2020-04-19T112953	['AT+SBDREG\r\n', '\r\n', '+SBDREG:2,36\r\n', '\r\n', 'OK\r\n']

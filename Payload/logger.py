@@ -11,7 +11,7 @@ if(not os.path.exists(logPath)):
     os.mkdir(logPath)
 logFile = os.path.join(logPath,'log'+timestamp()+'.txt')
 
-def log(str):
+def log(msg):
     print(msg)
     with(open(logFile,'a')) as f:
         f.write(timestamp() + '\t')
