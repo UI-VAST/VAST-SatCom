@@ -26,7 +26,7 @@ ir = iridium.Iridium(port,baud)
 ir.transmissionTime = 90	# transmit every 90 seconds
 ir.dest = "RB0012851"	#make sure you know which iridium modem is sending, which is receiving
 
-iridium.log("session started at " + timestamp())
+iridium.log("session started at " + iridium.timestamp())
 
 # ir.listen() begins the listener on a separate thread.  
 #anything coming in from Iridium will be read and processed, 
