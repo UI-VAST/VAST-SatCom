@@ -20,9 +20,9 @@ print "type \'exit\' to exit"
 # the serial output is /dev/ttyAMA0.
 # on pi zero, it is /dev/ttyS0.
 # if plugged into USB port, it's probably /dev/ttyUSB0.
-iridium = serial.Serial("/dev/ttyS0",baudrate=19200,timeout=5)
+#iridium = serial.Serial("/dev/ttyS0",baudrate=19200,timeout=5)
 #iridium = serial.Serial("/dev/ttyAMA0",baudrate=19200,timeout=5)
-#iridium = serial.Serial("/dev/ttyUSB0",baudrate=19200,timeout=5)
+iridium = serial.Serial("/dev/ttyUSB0",baudrate=19200,timeout=5)
 
 iridium.reset_input_buffer()
 
