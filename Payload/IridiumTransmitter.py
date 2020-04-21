@@ -20,7 +20,7 @@ import datetime
 '''
 
 transmissionTime = 90
-countdown = 80
+countdown = 70
 dest = "RB0012851"
 port = "/dev/ttyS0"
 #port = "/dev/ttyUSB0"
